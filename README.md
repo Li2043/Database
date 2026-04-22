@@ -292,7 +292,6 @@ Possible next steps for the project:
 
 ---
 
-## Author
 
 Built as a small relational database project in Java, focused on:
 
