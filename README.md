@@ -149,7 +149,6 @@ This design keeps the project small, readable, and easy to extend.
   - file-based persistence
 
 ---
-
 ## Project Structure
 
 ```text
@@ -162,3 +161,143 @@ DBCmd.java       # Abstract command type
 CreateCMD.java   # Legacy command class
 UseCMD.java      # Legacy command class
 SelectCMD.java   # Legacy command class
+```
+
+---
+
+## Getting Started
+
+### Requirements
+
+- Java 17 or above recommended
+
+### Compile the project
+
+```bash
+javac -d out *.java
+```
+
+### Run the server
+
+```bash
+java -cp out edu.uob.DBServer
+```
+
+The server listens on port `8888` and automatically creates a local `databases/` folder if it does not already exist.
+
+### Run the client
+
+Open a second terminal and run:
+
+```bash
+java -cp out edu.uob.DBClient
+```
+
+You can then type SQL-like commands directly into the client.
+
+---
+
+## Important Notes
+
+- Every command must end with a semicolon `;`
+- This is a **SQL-like** database, not a full SQL standard implementation
+- `JOIN` uses a custom syntax:
+
+```sql
+JOIN table1 AND table2 ON column1 AND column2;
+```
+
+---
+
+## Example Usage
+
+```sql
+CREATE DATABASE university;
+USE university;
+
+CREATE TABLE students (name, age, major);
+INSERT INTO students VALUES ('Alice', 20, 'ComputerScience');
+INSERT INTO students VALUES ('Bob', 22, 'Mathematics');
+INSERT INTO students VALUES ('Carol', 21, 'ComputerScience');
+
+SELECT * FROM students;
+SELECT name FROM students WHERE age >= 21;
+SELECT COUNT(*) FROM students;
+SELECT AVG(age) FROM students;
+SELECT major, COUNT(*) FROM students GROUP BY major;
+
+ALTER TABLE students ADD level;
+UPDATE students SET level = 'Undergraduate' WHERE name == 'Alice';
+SELECT * FROM students WHERE level == 'Undergraduate';
+
+SHOW TABLES;
+DESCRIBE students;
+```
+
+### Join Example
+
+```sql
+CREATE TABLE grades (student, course, mark);
+INSERT INTO grades VALUES ('Alice', 'DB', 78);
+INSERT INTO grades VALUES ('Bob', 'SE', 82);
+
+JOIN students AND grades ON name AND student;
+```
+
+---
+
+## What Makes This Project Interesting?
+
+This project is interesting because it focuses on the core logic behind relational databases rather than simply using an existing database system.
+
+It demonstrates practical understanding of:
+
+- query parsing
+- relational data operations
+- schema management
+- local persistence
+- backend validation
+- client-server communication
+
+For a small project, it still covers several important software engineering concepts in one place.
+
+---
+
+## Current Limitations
+
+This is a learning-oriented project, so it intentionally stays lightweight.
+
+Current limitations include:
+
+- no transaction support
+- no concurrency control
+- no indexing
+- no query optimization
+- no full SQL standard support
+- no `ORDER BY` or `LIMIT` execution yet
+- local filesystem storage only
+
+---
+
+## Future Improvements
+
+Possible next steps for the project:
+
+- add `ORDER BY` and `LIMIT`
+- support CSV import/export
+- add indexing for faster lookups
+- improve schema inspection and metadata output
+- add automated tests and benchmarks
+- build a REST API or web interface on top of the database server
+
+---
+
+## Author
+
+Built as a small relational database project in Java, focused on:
+
+- query parsing
+- relational operations
+- file-based persistence
+- backend validation
+- client-server database communication
